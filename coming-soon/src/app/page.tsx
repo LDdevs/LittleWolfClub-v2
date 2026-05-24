@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
 
             <span className="hidden sm:block text-sm text-neutral-400">
-              Coming Soon
+              Coming Very Soon
             </span>
 
             <button
