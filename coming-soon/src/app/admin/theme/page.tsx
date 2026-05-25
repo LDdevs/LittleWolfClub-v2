@@ -32,6 +32,16 @@ export default function ThemeCMSPage() {
           </p>
         </div>
 
+        <div className="rounded-3xl border border-white/10 bg-white/3 p-6 backdrop-blur-xl">
+          <h2 className="text-xl font-bold mb-3">
+            Seasonal Themes
+          </h2>
+
+          <p className="text-neutral-400 text-sm">
+            Future toggle for seasonal appearance (i.e. winter, summer).
+          </p>
+        </div>
+
       </div>
 
     </div>

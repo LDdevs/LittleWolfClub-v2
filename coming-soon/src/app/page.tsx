@@ -218,7 +218,7 @@ export default function HomePage() {
             >
 
               <img
-                src={content.scout.image || "/scout.svg"}
+                src={content.scout.image || "/Scout-New.svg"}
                 alt="Scout"
                 className="w-full h-full object-cover"
               />
