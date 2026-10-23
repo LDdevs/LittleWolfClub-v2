@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import ParticleBackground from "@/components/ParticleBackground";
 import ParallaxBackground from "@/components/ParallaxBackground";
 import Logo from "@/components/Logo";
@@ -144,7 +145,7 @@ export default function HomePage() {
 
           <div className="mb-6">
             <span className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm">
-              Adventure Awaits
+              Adventure Awaits you
             </span>
           </div>
 
@@ -220,17 +221,19 @@ export default function HomePage() {
               <img
                 src={content.scout.image || "/Scout-New.svg"}
                 alt="Scout"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
               />
 
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
-            </div>
+            </div >
 
-          </div>
+          </div >
 
-          {/* TEXT */}
-          <div className="flex-1">
+    {/* TEXT */ }
+    < div className = "flex-1" >
 
             <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
               Meet Your Guide
@@ -248,40 +251,40 @@ export default function HomePage() {
               {content.scout.text}
             </p>
 
-          </div>
+          </ >
 
-        </section>
+        </section >
 
-        {/* divider */}
-        <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
+    {/* divider */ }
+    < div className = "h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
 
-        {/* ========================================= */}
-        {/* WHAT'S IN THE BOX */}
-        {/* ========================================= */}
-        <section className="px-6 py-32 max-w-6xl mx-auto">
+      {/* ========================================= */ }
+  {/* WHAT'S IN THE BOX */ }
+  {/* ========================================= */ }
+  <section className="px-6 py-32 max-w-6xl mx-auto">
 
-          <div className="text-center mb-16">
+    <div className="text-center mb-16">
 
-            <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-4">
-              Explore The Adventure
-            </p>
+      <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-4">
+        Explore The Adventure
+      </p>
 
-            <h2 className="text-5xl md:text-6xl font-bold">
+      <h2 className="text-5xl md:text-6xl font-bold">
 
-              <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
-                {content.box.title || "What’s in the Box 📦"}
-              </span>
+        <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
+          {content.box.title || "What’s in the Box 📦"}
+        </span>
 
-            </h2>
+      </h2>
 
-          </div>
+    </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
+    <div className="grid md:grid-cols-2 gap-5">
 
-            {content.box.items.map((item, i) => (
-              <div
-                key={i}
-                className="
+      {content.box.items.map((item, i) => (
+        <div
+          key={i}
+          className="
                   group
                   relative
                   overflow-hidden
@@ -297,52 +300,52 @@ export default function HomePage() {
                   hover:border-green-400/20
                   hover:-translate-y-0.5
                 "
-              >
+        >
 
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br from-green-400/10 to-transparent" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br from-green-400/10 to-transparent" />
 
-                <div className="relative z-10 flex items-center gap-3">
+          <div className="relative z-10 flex items-center gap-3">
 
-                  <span className="text-green-400 text-lg">
-                    ✦
-                  </span>
+            <span className="text-green-400 text-lg">
+              ✦
+            </span>
 
-                  <span className="text-neutral-200 text-lg">
-                    {item}
-                  </span>
-
-                </div>
-
-              </div>
-            ))}
+            <span className="text-neutral-200 text-lg">
+              {item}
+            </span>
 
           </div>
 
-        </section>
+        </div>
+      ))}
 
-        {/* ========================================= */}
-        {/* FINAL CTA */}
-        {/* ========================================= */}
-        <section className="px-6 py-32 text-center max-w-4xl mx-auto">
+    </div>
 
-          <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
-            Join The Pack
-          </p>
+  </section>
 
-          <h2 className="text-5xl md:text-7xl font-black leading-tight mb-8">
+  {/* ========================================= */ }
+  {/* FINAL CTA */ }
+  {/* ========================================= */ }
+  <section className="px-6 py-32 text-center max-w-4xl mx-auto">
 
-            <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
-              Adventure is almost here.
-            </span>
+    <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
+      Join The Pack
+    </p>
 
-          </h2>
+    <h2 className="text-5xl md:text-7xl font-black leading-tight mb-8">
 
-          <p className="text-neutral-300 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-            Be the first to experience magical outdoor adventures designed to spark curiosity, confidence, and connection with nature.
-          </p>
+      <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
+        Adventure is almost here.
+      </span>
 
-          <button
-            className="
+    </h2>
+
+    <p className="text-neutral-300 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+      Be the first to experience magical outdoor adventures designed to spark curiosity, confidence, and connection with nature.
+    </p>
+
+    <button
+      className="
               group
               relative
               overflow-hidden
@@ -358,24 +361,24 @@ export default function HomePage() {
               hover:scale-105
               hover:shadow-[0_0_60px_rgba(74,222,128,0.35)]
             "
-          >
+    >
 
-            <span className="relative z-10">
-              Join the Waitlist
-            </span>
+      <span className="relative z-10">
+        Join the Waitlist
+      </span>
 
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/10" />
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/10" />
 
-          </button>
+    </button>
 
-        </section>
+  </section>
 
-        {/* ========================================= */}
-        {/* FOOTER */}
-        {/* ========================================= */}
-        <Footer />
+  {/* ========================================= */ }
+  {/* FOOTER */ }
+  {/* ========================================= */ }
+  <Footer />
 
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
