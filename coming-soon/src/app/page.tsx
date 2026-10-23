@@ -218,7 +218,7 @@ export default function HomePage() {
               "
             >
 
-              <img
+              <Image
                 src={content.scout.image || "/Scout-New.svg"}
                 alt="Scout"
                 fill
@@ -233,7 +233,7 @@ export default function HomePage() {
           </div >
 
     {/* TEXT */ }
-    < div className = "flex-1" >
+    <div className = "flex-1" >
 
             <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
               Meet Your Guide
@@ -251,12 +251,11 @@ export default function HomePage() {
               {content.scout.text}
             </p>
 
-          </ >
-
-        </section >
+          </div>
+        </section>
 
     {/* divider */ }
-    < div className = "h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
+    <div className = "h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
 
       {/* ========================================= */ }
   {/* WHAT'S IN THE BOX */ }
