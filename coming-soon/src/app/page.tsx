@@ -145,7 +145,7 @@ export default function HomePage() {
 
           <div className="mb-6">
             <span className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm">
-              Adventure Awaits you
+              Adventure Awaits, Are you ready?
             </span>
           </div>
 
