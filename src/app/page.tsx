@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import ParticleBackground from "@/components/ParticleBackground";
 import ParallaxBackground from "@/components/ParallaxBackground";
 import Logo from "@/components/Logo";
@@ -103,7 +104,7 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
 
             <span className="hidden sm:block text-sm text-neutral-400">
-              Coming Soon
+              Coming Very Soon
             </span>
 
             <button
@@ -144,7 +145,7 @@ export default function HomePage() {
 
           <div className="mb-6">
             <span className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm">
-              Adventure Awaits
+              Adventure Awaits you
             </span>
           </div>
 
@@ -217,10 +218,12 @@ export default function HomePage() {
               "
             >
 
-              <img
-                src={content.scout.image || "/scout.svg"}
+              <Image
+                src={content.scout.image || "/Scout-New.svg"}
                 alt="Scout"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
               />
 
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
