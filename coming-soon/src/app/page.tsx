@@ -33,6 +33,51 @@ export default function HomePage() {
   const [signupStatus, setSignupStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [signupMessage, setSignupMessage] = useState("");
+
+  const handleWaitlistSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    if (!marketingConsent || signupStatus === "loading") {
+      return;
+    }
+
+    setSignupStatus("loading");
+    setSignupMessage("");
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          marketingConsent,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setSignupStatus("success");
+      setSignupMessage(data.message || "Welcome to the Pack!");
+      setEmail("");
+      setMarketingConsent(false);
+    } catch (error) {
+      setSignupStatus("error");
+      setSignupMessage(
+        error instanceof Error
+          ? error.message
+          : "We couldn't add you just now. Please try again."
+      );
+    }
+  };
 
   // 🧠 CMS CONTENT LOADER
   const loadContent = async () => {
@@ -471,7 +516,7 @@ export default function HomePage() {
                   are ready to explore!
                 </p>
 
-                <form className="space-y-5">
+                <form className="space-y-5" onSubmit={handleWaitlistSubmit}>
                   <input
                     type="email"
                     required
@@ -494,12 +539,29 @@ export default function HomePage() {
                     </span>
                   </label>
 
+                  {signupMessage && (
+                    <p
+                      role="status"
+                      aria-live="polite"
+                      className={`text-sm ${signupStatus === "error"
+                        ? "text-red-400"
+                        : "text-green-400"
+                        }`}
+                    >
+                      {signupMessage}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    disabled={!marketingConsent}
+                    disabled={!marketingConsent || signupStatus === "loading"}
                     className="w-full rounded-full bg-green-400 px-6 py-4 font-semibold text-black transition-all hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    Join the Pack
+                    {signupStatus === "loading"
+                      ? "Joining..."
+                      : signupStatus === "success"
+                        ? "You're in!"
+                        : "Join the Pack"}
                   </button>
                 </form>
 
