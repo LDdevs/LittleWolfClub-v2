@@ -27,6 +27,12 @@ type Content = {
 
 export default function HomePage() {
   const [content, setContent] = useState<Content | null>(null);
+  const [showWaitlist, setShowWaitlist] = useState(false);
+  const [email, setEmail] = useState("");
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [signupStatus, setSignupStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   // 🧠 CMS CONTENT LOADER
   const loadContent = async () => {
@@ -100,10 +106,10 @@ export default function HomePage() {
         {/* ========================================= */}
         {/* <header className="w-full px-6 py-5 flex justify-between items-center"> */}
 
-          {/* <Logo /> */}
+        {/* <Logo /> */}
 
 
-          {/* <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
 
             <span className="hidden sm:block text-sm text-neutral-400">
               Coming Very Soon
@@ -185,6 +191,10 @@ export default function HomePage() {
           </p>
 
           <button
+            onClick={() => {
+              setShowWaitlist(true);
+              setSignupStatus("idle");
+            }}
             className="
               group
               relative
@@ -210,6 +220,7 @@ export default function HomePage() {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/10" />
 
           </button>
+
 
           {/* <Link
           href="/shop"
@@ -387,6 +398,10 @@ export default function HomePage() {
           </p>
 
           <button
+            onClick={() => {
+              setShowWaitlist(true);
+              setSignupStatus("idle");
+            }}
             className="
               group
               relative
@@ -414,6 +429,87 @@ export default function HomePage() {
           </button>
 
         </section>
+
+        {/* ========================================= */}
+        {/* WAITLIST POPUP */}
+        {/* ========================================= */}
+        {showWaitlist && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md px-5"
+            onClick={() => setShowWaitlist(false)}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="waitlist-title"
+              className="relative w-full max-w-lg rounded-3xl border border-green-400/20 bg-neutral-950 p-8 sm:p-10 shadow-[0_0_80px_rgba(74,222,128,0.12)]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setShowWaitlist(false)}
+                aria-label="Close popup"
+                className="absolute right-5 top-5 text-neutral-400 hover:text-white text-2xl"
+              >
+                &times;
+              </button>
+
+              <div className="text-center">
+                <p className="uppercase tracking-[0.35em] text-green-400 text-xs mb-4">
+                  A Little Adventure Awaits
+                </p>
+
+                <h2
+                  id="waitlist-title"
+                  className="text-3xl sm:text-4xl font-bold text-white mb-5"
+                >
+                  Join the Pack 🐺
+                </h2>
+
+                <p className="text-neutral-300 leading-relaxed mb-8">
+                  Be among the first to hear when Little Wolf Pack adventures
+                  are ready to explore!
+                </p>
+
+                <form className="space-y-5">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-white placeholder:text-neutral-500 outline-none focus:border-green-400/60"
+                  />
+
+                  <label className="flex items-start gap-3 text-left text-sm text-neutral-400">
+                    <input
+                      type="checkbox"
+                      checked={marketingConsent}
+                      onChange={(e) => setMarketingConsent(e.target.checked)}
+                      className="mt-1 accent-green-400"
+                    />
+                    <span>
+                      I&apos;d love to receive Little Wolf Pack news, launch updates
+                      and occasional adventures by email.
+                    </span>
+                  </label>
+
+                  <button
+                    type="submit"
+                    disabled={!marketingConsent}
+                    className="w-full rounded-full bg-green-400 px-6 py-4 font-semibold text-black transition-all hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Join the Pack
+                  </button>
+                </form>
+
+                <p className="mt-6 text-xs text-neutral-500">
+                  No spam, just a little adventure. Unsubscribe whenever you like.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ========================================= */}
         {/* FOOTER */}
