@@ -1,0 +1,14 @@
+# Duplicate files and build output in repository root
+/src/
+/.next/
+/node_modules/
+/next-env.d.ts
+
+# Environment and secret files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Vercel
+.vercel/

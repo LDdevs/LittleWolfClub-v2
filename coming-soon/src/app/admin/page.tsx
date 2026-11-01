@@ -27,6 +27,12 @@ const cards = [
     href: "/admin/theme",
     icon: "🌙",
   },
+  {
+    title: "Shop Management",
+    description: "Add and manage physical and digital products",
+    href: "/admin/shop",
+    icon: "🛍️",
+  },
 ];
 
 export default function AdminDashboardPage() {

@@ -29,6 +29,13 @@ const links = [
         href: "/admin/theme",
         icon: "🌙",
     },
+
+    {
+        name: "Shop",
+        href: "/admin/shop",
+        icon: "🛍️",
+    },
+
 ];
 
 export default function AdminLayout({

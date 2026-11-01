@@ -6,6 +6,7 @@ import ParticleBackground from "@/components/ParticleBackground";
 import ParallaxBackground from "@/components/ParallaxBackground";
 import Logo from "@/components/Logo";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 type Content = {
   hero: {
@@ -97,36 +98,57 @@ export default function HomePage() {
         {/* ========================================= */}
         {/* NAVBAR */}
         {/* ========================================= */}
-        <header className="w-full px-6 py-5 flex justify-between items-center">
+        {/* <header className="w-full px-6 py-5 flex justify-between items-center"> */}
 
-          <Logo />
+          {/* <Logo /> */}
 
-          <div className="flex items-center gap-4">
+
+          {/* <div className="flex items-center gap-4">
 
             <span className="hidden sm:block text-sm text-neutral-400">
               Coming Very Soon
             </span>
 
+            <Link
+              href="/shop"
+              className="
+      rounded-full
+      border border-white/10
+      bg-white/5
+      px-5 py-2
+      text-sm font-medium
+      text-neutral-200
+      backdrop-blur-md
+      transition-all duration-300
+      hover:border-green-400/40
+      hover:bg-green-400/10
+      hover:text-green-300
+      hover:shadow-[0_0_25px_rgba(74,222,128,0.15)]
+    "
+            >
+              Shop
+            </Link>
+
             <button
               className="
-                group
-                relative
-                overflow-hidden
-                rounded-full
-                border
-                border-white/10
-                bg-white/5
-                backdrop-blur-md
-                px-5
-                py-2
-                text-sm
-                font-medium
-                transition-all
-                duration-300
-                hover:border-green-400/40
-                hover:bg-green-400/10
-                hover:shadow-[0_0_30px_rgba(74,222,128,0.2)]
-              "
+      group
+      relative
+      overflow-hidden
+      rounded-full
+      border
+      border-white/10
+      bg-white/5
+      backdrop-blur-md
+      px-5
+      py-2
+      text-sm
+      font-medium
+      transition-all
+      duration-300
+      hover:border-green-400/40
+      hover:bg-green-400/10
+      hover:shadow-[0_0_30px_rgba(74,222,128,0.2)]
+    "
             >
               <span className="relative z-10">
                 Join Waitlist
@@ -136,7 +158,8 @@ export default function HomePage() {
             </button>
 
           </div>
-        </header>
+
+        </header> */}
 
         {/* ========================================= */}
         {/* HERO */}
@@ -188,6 +211,26 @@ export default function HomePage() {
 
           </button>
 
+          {/* <Link
+          href="/shop"
+          className="
+            rounded-full
+            border border-white/10
+            bg-white/5
+            px-4 py-2
+            text-sm font-semibold
+            text-white
+            backdrop-blur-md
+            transition-all duration-300
+            hover:border-green-400/40
+            hover:bg-green-400/10
+            hover:text-green-300
+            hover:shadow-[0_0_25px_rgba(74,222,128,0.15)]
+          "
+        >
+          Shop
+        </Link> */}
+
           {/* ✨ floating glow */}
           <div className="absolute blur-3xl opacity-20 bg-green-400/20 w-125 h-125 rounded-full -z-10" />
 
@@ -232,8 +275,8 @@ export default function HomePage() {
 
           </div >
 
-    {/* TEXT */ }
-    <div className = "flex-1" >
+          {/* TEXT */}
+          <div className="flex-1" >
 
             <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
               Meet Your Guide
@@ -254,36 +297,36 @@ export default function HomePage() {
           </div>
         </section>
 
-    {/* divider */ }
-    <div className = "h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
+        {/* divider */}
+        <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent max-w-5xl mx-auto" />
 
-      {/* ========================================= */ }
-  {/* WHAT'S IN THE BOX */ }
-  {/* ========================================= */ }
-  <section className="px-6 py-32 max-w-6xl mx-auto">
+        {/* ========================================= */}
+        {/* WHAT'S IN THE BOX */}
+        {/* ========================================= */}
+        <section className="px-6 py-32 max-w-6xl mx-auto">
 
-    <div className="text-center mb-16">
+          <div className="text-center mb-16">
 
-      <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-4">
-        Explore The Adventure
-      </p>
+            <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-4">
+              Explore The Adventure
+            </p>
 
-      <h2 className="text-5xl md:text-6xl font-bold">
+            <h2 className="text-5xl md:text-6xl font-bold">
 
-        <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
-          {content.box.title || "What’s in the Box 📦"}
-        </span>
+              <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
+                {content.box.title || "What’s in the Box 📦"}
+              </span>
 
-      </h2>
+            </h2>
 
-    </div>
+          </div>
 
-    <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-5">
 
-      {content.box.items.map((item, i) => (
-        <div
-          key={i}
-          className="
+            {content.box.items.map((item, i) => (
+              <div
+                key={i}
+                className="
                   group
                   relative
                   overflow-hidden
@@ -299,52 +342,52 @@ export default function HomePage() {
                   hover:border-green-400/20
                   hover:-translate-y-0.5
                 "
-        >
+              >
 
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br from-green-400/10 to-transparent" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br from-green-400/10 to-transparent" />
 
-          <div className="relative z-10 flex items-center gap-3">
+                <div className="relative z-10 flex items-center gap-3">
 
-            <span className="text-green-400 text-lg">
-              ✦
-            </span>
+                  <span className="text-green-400 text-lg">
+                    ✦
+                  </span>
 
-            <span className="text-neutral-200 text-lg">
-              {item}
-            </span>
+                  <span className="text-neutral-200 text-lg">
+                    {item}
+                  </span>
+
+                </div>
+
+              </div>
+            ))}
 
           </div>
 
-        </div>
-      ))}
+        </section>
 
-    </div>
+        {/* ========================================= */}
+        {/* FINAL CTA */}
+        {/* ========================================= */}
+        <section className="px-6 py-32 text-center max-w-4xl mx-auto">
 
-  </section>
+          <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
+            Join The Pack
+          </p>
 
-  {/* ========================================= */ }
-  {/* FINAL CTA */ }
-  {/* ========================================= */ }
-  <section className="px-6 py-32 text-center max-w-4xl mx-auto">
+          <h2 className="text-5xl md:text-7xl font-black leading-tight mb-8">
 
-    <p className="uppercase tracking-[0.35em] text-green-400 text-xs sm:text-sm mb-5">
-      Join The Pack
-    </p>
+            <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
+              Adventure is almost here.
+            </span>
 
-    <h2 className="text-5xl md:text-7xl font-black leading-tight mb-8">
+          </h2>
 
-      <span className="bg-linear-to-b from-white to-neutral-500 bg-clip-text text-transparent">
-        Adventure is almost here.
-      </span>
+          <p className="text-neutral-300 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+            Be the first to experience magical outdoor adventures designed to spark curiosity, confidence, and connection with nature.
+          </p>
 
-    </h2>
-
-    <p className="text-neutral-300 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-      Be the first to experience magical outdoor adventures designed to spark curiosity, confidence, and connection with nature.
-    </p>
-
-    <button
-      className="
+          <button
+            className="
               group
               relative
               overflow-hidden
@@ -360,22 +403,22 @@ export default function HomePage() {
               hover:scale-105
               hover:shadow-[0_0_60px_rgba(74,222,128,0.35)]
             "
-    >
+          >
 
-      <span className="relative z-10">
-        Join the Waitlist
-      </span>
+            <span className="relative z-10">
+              Join the Waitlist
+            </span>
 
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/10" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/10" />
 
-    </button>
+          </button>
 
-  </section>
+        </section>
 
-  {/* ========================================= */ }
-  {/* FOOTER */ }
-  {/* ========================================= */ }
-  <Footer />
+        {/* ========================================= */}
+        {/* FOOTER */}
+        {/* ========================================= */}
+        <Footer />
 
       </div >
     </div >
