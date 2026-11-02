@@ -7,7 +7,14 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
 
-        const { email, marketingConsent } = body;
+        const { email, marketingConsent, website } = body;
+
+        if (typeof website === "string" && website.trim() !== "") {
+            return NextResponse.json(
+                { success: true, message: "Welcome to the Pack!" },
+                { status: 200 }
+            );
+        }
 
         if (
             typeof email !== "string" ||

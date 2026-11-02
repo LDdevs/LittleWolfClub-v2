@@ -56,6 +56,11 @@ export default function HomePage() {
         body: JSON.stringify({
           email,
           marketingConsent,
+          website: (
+            document.querySelector<HTMLInputElement>(
+              'input[name="website"]'
+            )?.value || ""
+          ),
         }),
       });
 
@@ -117,6 +122,30 @@ export default function HomePage() {
       alive = false;
       channel.close();
     };
+  }, []);
+
+  // 🐺 Open the waitlist when requested from the navbar
+  useEffect(() => {
+    const handleOpenWaitlist = () => {
+      setShowWaitlist(true);
+      setSignupStatus("idle");
+      setSignupMessage("");
+    };
+
+    window.addEventListener("open-waitlist", handleOpenWaitlist);
+
+    return () => {
+      window.removeEventListener("open-waitlist", handleOpenWaitlist);
+    };
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("join") === "1") {
+      window.dispatchEvent(new Event("open-waitlist"));
+      window.history.replaceState({}, "", "/");
+    }
   }, []);
 
   if (!content) {
@@ -517,6 +546,14 @@ export default function HomePage() {
                 </p>
 
                 <form className="space-y-5" onSubmit={handleWaitlistSubmit}>
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="absolute -left-[9999px]"
+                  />
                   <input
                     type="email"
                     required
