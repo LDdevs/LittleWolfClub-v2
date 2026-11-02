@@ -96,10 +96,12 @@ export async function POST(req: Request) {
             { success: true, message: "Welcome to the Pack!" },
             { status: 201 }
         );
-    } catch {
+    } catch (error) {
+        console.error("Waitlist API error:", error);
+
         return NextResponse.json(
-            { error: "Invalid request. Please try again." },
-            { status: 400 }
+            { error: "Something went wrong. Please try again." },
+            { status: 500 }
         );
     }
 }
