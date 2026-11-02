@@ -1,5 +1,15 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
+
+const ratelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(5, "10 m"),
+    prefix: "little-wolf-pack:waitlist",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +23,18 @@ export async function POST(req: Request) {
             return NextResponse.json(
                 { success: true, message: "Welcome to the Pack!" },
                 { status: 200 }
+            );
+        }
+
+        const ip =
+            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+        const { success } = await ratelimit.limit(ip);
+
+        if (!success) {
+            return NextResponse.json(
+                { error: "Too many signup attempts. Please try again in a few minutes." },
+                { status: 429 }
             );
         }
 
