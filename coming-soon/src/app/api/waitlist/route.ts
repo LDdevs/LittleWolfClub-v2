@@ -15,7 +15,16 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
     try {
-        const body = await req.json();
+        let body;
+
+        try {
+            body = await req.json();
+        } catch {
+            return NextResponse.json(
+                { error: "Invalid request. Please try again." },
+                { status: 400 }
+            );
+        }
 
         const { email, marketingConsent, website } = body;
 
