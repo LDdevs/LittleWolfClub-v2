@@ -5,6 +5,7 @@ import ParticleBackground from "@/components/ParticleBackground";
 import FireflyCursor from "@/components/FireflyCursor";
 import Navbar from "@/components/Navbar";
 import { BasketProvider } from "@/components/BasketContext";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 
 export default function RootLayout({
   children,
@@ -40,6 +41,9 @@ export default function RootLayout({
                 <Navbar />
               </div>
             </div>
+
+            {/* 📢 ANNOUNCEMENT */}
+            <AnnouncementBanner />
 
             {/* 🧠 CONTENT */}
             <main className="relative z-30">

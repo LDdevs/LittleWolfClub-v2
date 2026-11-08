@@ -56,7 +56,16 @@ export async function POST(req: Request) {
       stock_quantity,
       digital_file_url,
       is_published,
+      category: productCategory,
+      is_new: productIsNew,
     } = body;
+
+    const validCategories = [
+      "nature_discovery_kits",
+      "add_ons",
+      "free_downloads",
+    ];
+
 
     if (
       typeof name !== "string" ||
@@ -65,10 +74,12 @@ export async function POST(req: Request) {
       !slug.trim() ||
       !["physical", "digital"].includes(product_type) ||
       !Number.isInteger(price_pence) ||
-      price_pence < 0
+      price_pence < 0 ||
+      !validCategories.includes(productCategory) ||
+      typeof productIsNew !== "boolean"
     ) {
       return NextResponse.json(
-        { error: "Please provide a valid name, slug, product type and price." },
+        { error: "Please provide valid product details and category." },
         { status: 400 }
       );
     }
@@ -119,6 +130,8 @@ export async function POST(req: Request) {
           ? digital_file_url?.trim() || null
           : null,
       is_published: is_published === true,
+      category: productCategory,
+      is_new: productIsNew,
     };
 
     const { data, error } = await supabaseAdmin
@@ -189,6 +202,8 @@ export async function PATCH(req: Request) {
       "stock_quantity",
       "digital_file_url",
       "is_published",
+      "category",
+      "is_new",
     ];
 
     const safeUpdates: Record<string, unknown> = {};
@@ -236,6 +251,29 @@ export async function PATCH(req: Request) {
     ) {
       return NextResponse.json(
         { error: "Invalid product type." },
+        { status: 400 }
+      );
+    }
+    if (
+      "category" in safeUpdates &&
+      ![
+        "nature_discovery_kits",
+        "add_ons",
+        "free_downloads",
+      ].includes(safeUpdates.category as string)
+    ) {
+      return NextResponse.json(
+        { error: "Invalid product category." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      "is_new" in safeUpdates &&
+      typeof safeUpdates.is_new !== "boolean"
+    ) {
+      return NextResponse.json(
+        { error: "Invalid New status." },
         { status: 400 }
       );
     }

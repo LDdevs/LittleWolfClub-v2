@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 type Product = {
@@ -9,6 +10,8 @@ type Product = {
     slug: string;
     description: string;
     product_type: "physical" | "digital";
+    category: string;
+    is_new: boolean;
     price_pence: number;
     image_url: string | null;
     stock_quantity: number | null;
@@ -21,6 +24,8 @@ const emptyForm = {
     name: "",
     description: "",
     product_type: "physical" as "physical" | "digital",
+    category: "nature_discovery_kits",
+    is_new: false,
     price: "",
     image_url: "",
     stock_quantity: "0",
@@ -34,14 +39,13 @@ export default function ShopManagementPage() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
+
     const [message, setMessage] = useState("");
     const [editingId, setEditingId] = useState<string | null>(null);
     const [imageUploading, setImageUploading] = useState(false);
     const [digitalUploading, setDigitalUploading] = useState(false);
 
     const loadProducts = useCallback(async () => {
-        setLoading(true);
-        setError("");
 
         try {
             const response = await fetch("/api/admin-products");
@@ -62,12 +66,45 @@ export default function ShopManagementPage() {
     }, []);
 
     useEffect(() => {
-        void loadProducts();
-    }, [loadProducts]);
+        let cancelled = false;
+
+        async function fetchProducts() {
+            try {
+                const response = await fetch("/api/admin-products");
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "Could not load products.");
+                }
+
+                if (!cancelled) {
+                    setProducts(result.products ?? []);
+                }
+            } catch (err) {
+                if (!cancelled) {
+                    setError(
+                        err instanceof Error
+                            ? err.message
+                            : "Could not load products."
+                    );
+                }
+            } finally {
+                if (!cancelled) {
+                    setLoading(false);
+                }
+            }
+        }
+
+        void fetchProducts();
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     function updateField(
         field: keyof typeof emptyForm,
-        value: string
+        value: string | boolean
     ) {
         setForm((current) => ({ ...current, [field]: value }));
     }
@@ -205,6 +242,8 @@ export default function ShopManagementPage() {
             name: product.name,
             description: product.description || "",
             product_type: product.product_type,
+            category: product.category,
+            is_new: product.is_new,
             price: (product.price_pence / 100).toFixed(2),
             image_url: product.image_url || "",
             stock_quantity:
@@ -303,6 +342,8 @@ export default function ShopManagementPage() {
                     slug,
                     description: form.description.trim(),
                     product_type: form.product_type,
+                    category: form.category,
+                    is_new: form.is_new,
                     price_pence: Math.round(price * 100),
                     image_url: form.image_url.trim() || null,
                     stock_quantity:
@@ -378,7 +419,7 @@ export default function ShopManagementPage() {
                 </div>
             )}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <section className="rounded-3xl border border-white/10 bg-white/3 p-6 sm:p-8">
                 <h2 className="mb-6 text-2xl font-bold">
                     {editingId ? "Edit product" : "Add a product"}
                 </h2>
@@ -410,6 +451,36 @@ export default function ShopManagementPage() {
                             </select>
                         </label>
                     </div>
+
+                    <label className="block space-y-2">
+                        <span className="text-sm font-medium">Product category *</span>
+                        <select
+                            value={form.category}
+                            onChange={(e) => updateField("category", e.target.value)}
+                            className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 outline-none focus:border-green-400"
+                        >
+                            <option value="nature_discovery_kits">
+                                Little Wolf Pack – Nature Discovery Kits
+                            </option>
+                            <option value="add_ons">Add-ons</option>
+                            <option value="free_downloads">Free Downloads</option>
+                        </select>
+                    </label>
+
+                    <label className="flex items-start gap-3 rounded-xl border border-white/10 p-4">
+                        <input
+                            type="checkbox"
+                            checked={form.is_new}
+                            onChange={(e) => updateField("is_new", e.target.checked)}
+                            className="mt-1 accent-green-400"
+                        />
+                        <span>
+                            <span className="block font-medium">Feature in New</span>
+                            <span className="mt-1 block text-sm text-neutral-400">
+                                Show this product in the New section of the shop.
+                            </span>
+                        </span>
+                    </label>
 
                     <label className="block space-y-2">
                         <span className="text-sm font-medium">Description</span>
@@ -489,9 +560,11 @@ export default function ShopManagementPage() {
                                     Image preview
                                 </p>
 
-                                <img
+                                <Image
                                     src={form.image_url}
                                     alt="Product preview"
+                                    width={400}
+                                    height={400}
                                     className="aspect-square w-full rounded-2xl border border-green-300/20 object-cover"
                                 />
 
@@ -655,7 +728,7 @@ export default function ShopManagementPage() {
                         {products.map((product) => (
                             <article
                                 key={product.id}
-                                className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:flex-row sm:items-center sm:justify-between"
+                                className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/3 p-5 sm:flex-row sm:items-center sm:justify-between"
                             >
                                 <div className="min-w-0">
                                     <div className="flex flex-wrap items-center gap-2">
@@ -668,6 +741,19 @@ export default function ShopManagementPage() {
                                                 ? "Physical"
                                                 : "Digital"}
                                         </span>
+                                        <span className="rounded-full bg-white/5 px-2 py-1 text-xs text-neutral-400">
+                                            {product.category === "nature_discovery_kits"
+                                                ? "Nature Discovery Kits"
+                                                : product.category === "add_ons"
+                                                    ? "Add-ons"
+                                                    : "Free Downloads"}
+                                        </span>
+
+                                        {product.is_new && (
+                                            <span className="rounded-full bg-green-400/10 px-2 py-1 text-xs text-green-300">
+                                                New
+                                            </span>
+                                        )}
                                     </div>
                                     <p className="mt-1 text-sm text-neutral-400">
                                         £{(product.price_pence / 100).toFixed(2)}

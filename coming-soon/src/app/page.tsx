@@ -176,72 +176,6 @@ export default function HomePage() {
       <div className="relative z-30">
 
         {/* ========================================= */}
-        {/* NAVBAR */}
-        {/* ========================================= */}
-        {/* <header className="w-full px-6 py-5 flex justify-between items-center"> */}
-
-        {/* <Logo /> */}
-
-
-        {/* <div className="flex items-center gap-4">
-
-            <span className="hidden sm:block text-sm text-neutral-400">
-              Coming Very Soon
-            </span>
-
-            <Link
-              href="/shop"
-              className="
-      rounded-full
-      border border-white/10
-      bg-white/5
-      px-5 py-2
-      text-sm font-medium
-      text-neutral-200
-      backdrop-blur-md
-      transition-all duration-300
-      hover:border-green-400/40
-      hover:bg-green-400/10
-      hover:text-green-300
-      hover:shadow-[0_0_25px_rgba(74,222,128,0.15)]
-    "
-            >
-              Shop
-            </Link>
-
-            <button
-              className="
-      group
-      relative
-      overflow-hidden
-      rounded-full
-      border
-      border-white/10
-      bg-white/5
-      backdrop-blur-md
-      px-5
-      py-2
-      text-sm
-      font-medium
-      transition-all
-      duration-300
-      hover:border-green-400/40
-      hover:bg-green-400/10
-      hover:shadow-[0_0_30px_rgba(74,222,128,0.2)]
-    "
-            >
-              <span className="relative z-10">
-                Join Waitlist
-              </span>
-
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-r from-green-400/20 to-transparent" />
-            </button>
-
-          </div>
-
-        </header> */}
-
-        {/* ========================================= */}
         {/* HERO */}
         {/* ========================================= */}
         <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 text-center max-w-5xl mx-auto">
@@ -330,11 +264,12 @@ export default function HomePage() {
         <section className="min-h-screen px-6 py-32 flex flex-col md:flex-row items-center gap-20 max-w-6xl mx-auto">
 
           {/* IMAGE */}
-          <div className="flex-1">
+          <div className="flex-1 w-full min-w-0">
 
             <div
               className="
                 relative
+                w-full
                 aspect-square
                 overflow-hidden
                 rounded-4xl
@@ -351,7 +286,7 @@ export default function HomePage() {
                 alt="Scout"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
+                className="object-contain"
               />
 
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
@@ -378,6 +313,16 @@ export default function HomePage() {
             <p className="text-neutral-300 text-lg leading-relaxed">
               {content.scout.text}
             </p>
+
+            <div className="mt-8">
+              <Link
+                href="/scouts-corner"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-green-700 hover:bg-green-600 text-white font-semibold shadow-lg shadow-green-950/30 transition-all duration-300 hover:scale-105"
+              >
+                Explore Scout&apos;s Corner
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
 
           </div>
         </section>

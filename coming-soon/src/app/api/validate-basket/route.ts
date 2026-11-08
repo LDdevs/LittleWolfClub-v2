@@ -54,7 +54,7 @@ export async function POST(request: Request) {
         const { data: products, error } = await supabaseAdmin
             .from("products")
             .select(
-                "id, name, slug, product_type, price_pence, image_url, stock_quantity, is_published"
+                "id, name, slug, product_type, category, price_pence, image_url, stock_quantity, is_published"
             )
             .in("id", items.map((item) => item.id));
 
@@ -80,6 +80,17 @@ export async function POST(request: Request) {
                 return NextResponse.json(
                     { error: "A product in your basket is no longer available." },
                     { status: 409 }
+                );
+            }
+
+            if (
+                product.category === "free_downloads" &&
+                product.product_type === "digital" &&
+                product.price_pence === 0
+            ) {
+                return NextResponse.json(
+                    { error: "Free downloads cannot be added to your basket. Please download them directly." },
+                    { status: 400 }
                 );
             }
 

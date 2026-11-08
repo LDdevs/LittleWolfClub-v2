@@ -42,3 +42,50 @@ body {
     box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
   }
 }
+
+.firefly {
+  animation: fireflyGlow 3s infinite ease-in-out;
+}
+
+.firefly-slow {
+  animation: fireflyGlow 4.5s infinite ease-in-out;
+}
+
+.firefly-fast {
+  animation: fireflyGlow 2.5s infinite ease-in-out;
+}
+
+@keyframes fireflyGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+    filter: brightness(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: brightness(1.5);
+  }
+}
+.scout-float {
+  animation: scoutFloat 5s ease-in-out infinite;
+}
+
+@keyframes scoutFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .firefly,
+  .firefly-slow,
+  .firefly-fast,
+  .scout-float {
+    animation: none !important;
+  }
+}

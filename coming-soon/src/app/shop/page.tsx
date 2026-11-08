@@ -12,6 +12,8 @@ type Product = {
     slug: string;
     description: string;
     product_type: "physical" | "digital";
+    category: string;
+    is_new: boolean;
     price_pence: number;
     image_url: string | null;
     stock_quantity: number | null;
@@ -22,13 +24,27 @@ export default function ShopPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const newProducts = products.filter((product) => product.is_new);
+
+    const natureKits = products.filter(
+        (product) => product.category === "nature_discovery_kits"
+    );
+
+    const addOns = products.filter(
+        (product) => product.category === "add_ons"
+    );
+
+    const freeDownloads = products.filter(
+        (product) => product.category === "free_downloads"
+    );
+
     useEffect(() => {
         async function loadProducts() {
             try {
                 const { data, error: queryError } = await supabase
                     .from("products")
                     .select(
-                        "id, name, slug, description, product_type, price_pence, image_url, stock_quantity"
+                        "id, name, slug, description, product_type, category, is_new, price_pence, image_url, stock_quantity"
                     )
                     .eq("is_published", true)
                     .order("created_at", { ascending: false });
@@ -96,8 +112,93 @@ export default function ShopPage() {
                 <div className="mx-auto mt-14 h-px max-w-5xl bg-gradient-to-r from-transparent via-green-300/40 to-transparent" />
             </section>
 
+            {/* Shop category navigation */}
+            <nav
+                aria-label="Shop categories"
+                className="mx-auto mb-12 flex max-w-5xl flex-wrap justify-center gap-3 px-5"
+            >
+                {[
+                    { label: "✨ New", href: "#new" },
+                    { label: "🌿 Nature Discovery Kits", href: "#nature-kits" },
+                    { label: "🐾 Add-ons", href: "#add-ons" },
+                    { label: "📥 Free Downloads", href: "#free-downloads" },
+                ].map((category) => (
+                    <a
+                        key={category.href}
+                        href={category.href}
+                        className="rounded-full border border-green-300/20 bg-green-950/40 px-5 py-3 text-sm font-semibold text-green-100 transition hover:border-green-300/50 hover:bg-green-400/10"
+                    >
+                        {category.label}
+                    </a>
+                ))}
+            </nav>
+
+            {/* New collection */}
+            {!loading && !error && newProducts.length > 0 && (
+                <section
+                    id="new"
+                    className="mx-auto max-w-7xl px-5 pb-16 sm:px-8"
+                >
+                    <div className="mb-6">
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-green-300">
+                            Fresh from the Pack
+                        </p>
+                        <h2 className="text-2xl font-bold sm:text-3xl">
+                            New treasures
+                        </h2>
+                    </div>
+
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {newProducts.map((product) => (
+                            <article
+                                key={product.id}
+                                className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
+                            >
+                                <a
+                                    href={
+                                        product.category === "free_downloads"
+                                            ? `/api/free-download/${product.slug}`
+                                            : `/shop/${product.slug}`
+                                    }
+                                >
+                                    {product.image_url && (
+                                        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-2xl">
+                                            <Image
+                                                src={product.image_url}
+                                                alt={product.name}
+                                                fill
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        </div>
+                                    )}
+                                    <span className="mb-2 inline-block rounded-full bg-green-400/10 px-3 py-1 text-xs font-semibold text-green-200">
+                                        ✨ New
+                                    </span>
+                                    <h3 className="text-xl font-bold text-white">
+                                        {product.name}
+                                    </h3>
+                                    <p className="mt-2 text-sm text-neutral-400">
+                                        {product.description}
+                                    </p>
+                                    <p className="mt-4 font-bold text-green-200">
+                                        {product.category === "free_downloads"
+                                            ? "FREE"
+                                            : formatPrice(product.price_pence)}
+                                    </p>
+                                </a>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+            )}
+
             {/* Product collection */}
-            <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8 sm:pb-32">
+            <section
+                id="nature-kits"
+                className="mx-auto max-w-7xl px-5 pb-24 sm:px-8 sm:pb-32"
+            >
                 <div className="mb-9 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-green-300">
@@ -168,7 +269,7 @@ export default function ShopPage() {
                     </div>
                 ) : (
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {products.map((product) => {
+                        {natureKits.map((product) => {
                             const outOfStock =
                                 product.product_type === "physical" &&
                                 product.stock_quantity !== null &&
@@ -272,6 +373,112 @@ export default function ShopPage() {
                     </div>
                 )}
             </section>
+
+            {/* Add-ons collection */}
+            {!loading && !error && addOns.length > 0 && (
+                <section
+                    id="add-ons"
+                    className="mx-auto max-w-7xl px-5 pb-24 sm:px-8"
+                >
+                    <div className="mb-9">
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-green-300">
+                            Little extras
+                        </p>
+                        <h2 className="text-2xl font-bold sm:text-3xl">
+                            Add a little more adventure
+                        </h2>
+                    </div>
+
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {addOns.map((product) => (
+                            <article
+                                key={product.id}
+                                className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
+                            >
+                                <Link href={`/shop/${product.slug}`}>
+                                    {product.image_url && (
+                                        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-2xl">
+                                            <Image
+                                                src={product.image_url}
+                                                alt={product.name}
+                                                fill
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        </div>
+                                    )}
+                                    <h3 className="text-xl font-bold text-white">
+                                        {product.name}
+                                    </h3>
+                                    <p className="mt-2 text-sm text-neutral-400">
+                                        {product.description}
+                                    </p>
+                                    <p className="mt-4 font-bold text-green-200">
+                                        {formatPrice(product.price_pence)}
+                                    </p>
+                                </Link>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Free downloads collection */}
+            {!loading && !error && freeDownloads.length > 0 && (
+                <section
+                    id="free-downloads"
+                    className="mx-auto max-w-7xl px-5 pb-24 sm:px-8"
+                >
+                    <div className="mb-9">
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-green-300">
+                            A little gift from Scout
+                        </p>
+                        <h2 className="text-2xl font-bold sm:text-3xl">
+                            Free Downloads
+                        </h2>
+                        <p className="mt-3 max-w-2xl text-sm leading-7 text-neutral-400">
+                            Fun activities and little adventures to enjoy at home, completely free.
+                        </p>
+                    </div>
+
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {freeDownloads.map((product) => (
+                            <article
+                                key={product.id}
+                                className="rounded-3xl border border-white/10 bg-white/[0.04] p-5"
+                            >
+                                <a href={`/api/free-download/${product.slug}`} download>
+                                    {product.image_url && (
+                                        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-2xl">
+                                            <Image
+                                                src={product.image_url}
+                                                alt={product.name}
+                                                fill
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        </div>
+                                    )}
+                                    <span className="mb-2 inline-block rounded-full bg-green-400/10 px-3 py-1 text-xs font-semibold text-green-200">
+                                        FREE
+                                    </span>
+                                    <h3 className="text-xl font-bold text-white">
+                                        {product.name}
+                                    </h3>
+                                    <p className="mt-2 text-sm text-neutral-400">
+                                        {product.description}
+                                    </p>
+                                    <p className="mt-4 font-bold text-green-200">
+                                        Download for Free →
+                                    </p>
+                                </a>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* Closing brand message */}
             <section className="relative overflow-hidden border-t border-green-200/10 px-6 py-16 text-center sm:py-20">
