@@ -19,6 +19,8 @@ type ThemeContextType = {
   toggle: () => void;
   atmosphere: AtmosphereSettings;
   activeAtmosphere: AtmosphereTheme;
+  effectsEnabled: boolean;
+  toggleEffects: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -26,16 +28,33 @@ const ThemeContext = createContext<ThemeContextType>({
   toggle: () => {},
   atmosphere: DEFAULT_ATMOSPHERE_SETTINGS,
   activeAtmosphere: "autumn",
+  effectsEnabled: true,
+  toggleEffects: () => {},
 });
+
+const EFFECTS_STORAGE_KEY = "little-wolf-effects-enabled";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mood, setMood] = useState(1);
   const [atmosphere, setAtmosphere] = useState<AtmosphereSettings>(
     DEFAULT_ATMOSPHERE_SETTINGS
   );
+  const [effectsEnabled, setEffectsEnabled] = useState(true);
 
   const toggle = () => {
     setMood((m) => (m === 1 ? 0 : 1));
+  };
+
+  const toggleEffects = () => {
+    setEffectsEnabled((current) => {
+      const next = !current;
+      try {
+        window.localStorage.setItem(EFFECTS_STORAGE_KEY, String(next));
+      } catch {
+        // The preference still works for this visit if storage is unavailable.
+      }
+      return next;
+    });
   };
 
   const loadAtmosphere = useCallback(async () => {
@@ -54,6 +73,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error) {
       console.error("Could not load seasonal atmosphere:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const savedPreference = window.localStorage.getItem(EFFECTS_STORAGE_KEY);
+      if (savedPreference === "true" || savedPreference === "false") {
+        setEffectsEnabled(savedPreference === "true");
+      }
+    } catch {
+      // Use the default enabled preference when storage is unavailable.
     }
   }, []);
 
@@ -82,7 +112,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ mood, toggle, atmosphere, activeAtmosphere }}
+      value={{ mood, toggle, atmosphere, activeAtmosphere, effectsEnabled, toggleEffects }}
     >
       {children}
     </ThemeContext.Provider>
