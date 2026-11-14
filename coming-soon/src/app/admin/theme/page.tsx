@@ -11,14 +11,14 @@ import {
 } from "@/lib/atmosphere";
 
 const themeDetails: Record<AtmosphereTheme, { label: string; icon: string; description: string }> = {
-  spring: { label: "Spring", icon: "🌸", description: "Soft blossom petals and fresh woodland colours." },
-  summer: { label: "Summer", icon: "☀️", description: "Warm golden light, sunshine and gentle drifting specks." },
-  autumn: { label: "Autumn", icon: "🍂", description: "Copper, amber and golden leaves drifting through the forest." },
-  winter: { label: "Winter", icon: "❄️", description: "Quiet snowfall and a cool, frosty atmosphere." },
-  halloween: { label: "Halloween", icon: "🎃", description: "A playful twilight woodland with autumnal orange accents." },
-  christmas: { label: "Christmas", icon: "🎄", description: "Evergreen, soft snow and festive woodland details." },
-  easter: { label: "Easter", icon: "🐣", description: "Pastel blossoms and fresh spring colours." },
-  bonfire: { label: "Bonfire Night", icon: "🔥", description: "Warm ember-like flecks and a cosy evening glow." },
+  spring: { label: "Spring", icon: "🌸", description: "Drifting blossom petals, fresh greens and a soft springtime glow." },
+  summer: { label: "Summer", icon: "☀️", description: "Glowing fireflies rise through warm golden summer light." },
+  autumn: { label: "Autumn", icon: "🍂", description: "Copper and amber leaves swirl gently in woodland breezes." },
+  winter: { label: "Winter", icon: "❄️", description: "Layered snowfall, delicate snow crystals and frosted air." },
+  halloween: { label: "Halloween", icon: "🎃", description: "A mysterious woodland with fluttering bats, glowing lights and purple mist." },
+  christmas: { label: "Christmas", icon: "🎄", description: "Twinkling festive lights, falling snow and little woodland stars." },
+  easter: { label: "Easter", icon: "🐣", description: "Pastel decorated eggs, spring colours and a gentle rosy glow." },
+  bonfire: { label: "Bonfire Night", icon: "🔥", description: "Glowing embers and sparks rise through a warm bonfire glow." },
 };
 
 export default function ThemeCMSPage() {
