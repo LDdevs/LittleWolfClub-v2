@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AtmosphereParticleCanvas from "@/components/AtmosphereParticleCanvas";
 import {
   ATMOSPHERE_THEMES,
   DEFAULT_ATMOSPHERE_SETTINGS,
@@ -162,14 +163,35 @@ export default function ThemeCMSPage() {
           <h2 className="text-xl font-bold">Preview the woodland</h2>
           <p className="mt-1 text-sm text-neutral-400">Previewing a theme does not publish it. Save changes when you're happy.</p>
         </div>
-        <div className="relative min-h-48 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-950 via-neutral-950 to-black p-6">
-          <div className="absolute inset-0 opacity-30" style={{ background: activeTheme === "winter" ? "radial-gradient(circle at 50% 0%, #bae6fd, transparent 65%)" : activeTheme === "summer" ? "radial-gradient(circle at 50% 0%, #facc15, transparent 65%)" : activeTheme === "spring" || activeTheme === "easter" ? "radial-gradient(circle at 50% 0%, #f9a8d4, transparent 65%)" : activeTheme === "halloween" || activeTheme === "bonfire" ? "radial-gradient(circle at 50% 0%, #f97316, transparent 65%)" : "radial-gradient(circle at 50% 0%, #b45309, transparent 65%)" }} />
-          <div className="relative z-10">
-            <p className="text-xs uppercase tracking-[0.25em] text-green-200/70">Little Wolf woodland</p>
+        <div className="relative min-h-64 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-950 via-neutral-950 to-black p-6">
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              background: activeTheme === "winter" || activeTheme === "christmas"
+                ? "radial-gradient(circle at 50% 0%, #bae6fd, transparent 65%)"
+                : activeTheme === "summer"
+                  ? "radial-gradient(circle at 50% 0%, #facc15, transparent 65%)"
+                  : activeTheme === "spring" || activeTheme === "easter"
+                    ? "radial-gradient(circle at 50% 0%, #f9a8d4, transparent 65%)"
+                    : activeTheme === "halloween" || activeTheme === "bonfire"
+                      ? "radial-gradient(circle at 50% 0%, #f97316, transparent 65%)"
+                      : "radial-gradient(circle at 50% 0%, #b45309, transparent 65%)",
+            }}
+          />
+          <AtmosphereParticleCanvas
+            theme={activeTheme}
+            intensity={settings.intensity}
+            enabled={settings.enabled}
+          />
+          <div className="relative z-10 pointer-events-none">
+            <p className="text-xs uppercase tracking-[0.25em] text-green-200/70">Little Wolf woodland · live preview</p>
             <p className="mt-3 text-3xl font-black">{themeDetails[activeTheme].icon} {themeDetails[activeTheme].label}</p>
             <p className="mt-2 max-w-lg text-sm text-neutral-300">{themeDetails[activeTheme].description}</p>
-            <p className="mt-5 text-xs text-neutral-400">Intensity: {settings.intensity}% · {settings.enabled ? "Atmosphere enabled" : "Atmosphere disabled"}</p>
+            <p className="mt-5 text-xs text-neutral-400">Intensity: {settings.intensity}% · {settings.enabled ? "Particles enabled" : "Particles paused"}</p>
           </div>
+          {!settings.enabled && (
+            <p className="absolute bottom-4 right-4 z-10 rounded-full bg-black/60 px-3 py-1 text-xs text-neutral-300">Preview paused while atmosphere is disabled</p>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {ATMOSPHERE_THEMES.map((theme) => (
