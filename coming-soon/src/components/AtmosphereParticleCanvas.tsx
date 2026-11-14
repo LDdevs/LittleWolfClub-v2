@@ -252,6 +252,7 @@ export default function AtmosphereParticleCanvas({
 
     const drawFrame = (move: boolean) => {
       ctx.clearRect(0, 0, width, height);
+      if (!enabled || intensity <= 0) return;
       drawAmbient();
       particles.forEach((particle) => {
         if (move) {
