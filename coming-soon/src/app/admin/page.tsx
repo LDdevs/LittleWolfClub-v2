@@ -23,7 +23,7 @@ const cards = [
   },
   {
     title: "Theme Settings",
-    description: "Control particles and nighttime mode",
+    description: "Manage seasonal effects, special occasions and atmosphere intensity",
     href: "/admin/theme",
     icon: "🌙",
   },
