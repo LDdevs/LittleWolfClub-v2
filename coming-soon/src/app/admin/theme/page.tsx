@@ -181,17 +181,14 @@ export default function ThemeCMSPage() {
           <AtmosphereParticleCanvas
             theme={activeTheme}
             intensity={settings.intensity}
-            enabled={settings.enabled}
+            enabled
           />
           <div className="relative z-10 pointer-events-none">
             <p className="text-xs uppercase tracking-[0.25em] text-green-200/70">Little Wolf woodland · live preview</p>
             <p className="mt-3 text-3xl font-black">{themeDetails[activeTheme].icon} {themeDetails[activeTheme].label}</p>
             <p className="mt-2 max-w-lg text-sm text-neutral-300">{themeDetails[activeTheme].description}</p>
-            <p className="mt-5 text-xs text-neutral-400">Intensity: {settings.intensity}% · {settings.enabled ? "Particles enabled" : "Particles paused"}</p>
+            <p className="mt-5 text-xs text-neutral-400">Intensity: {settings.intensity}% · {settings.enabled ? "Preview running · publishing enabled" : "Preview running · publishing disabled"}</p>
           </div>
-          {!settings.enabled && (
-            <p className="absolute bottom-4 right-4 z-10 rounded-full bg-black/60 px-3 py-1 text-xs text-neutral-300">Preview paused while atmosphere is disabled</p>
-          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {ATMOSPHERE_THEMES.map((theme) => (
