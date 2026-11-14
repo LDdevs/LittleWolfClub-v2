@@ -11,7 +11,8 @@ export default function ParallaxBackground() {
     const el = ref.current;
     if (!el) return;
 
-    if (!effectsEnabled) {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!effectsEnabled || motionPreference.matches) {
       el.style.transform = "scale(1.1)";
       return;
     }
