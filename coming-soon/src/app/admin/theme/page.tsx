@@ -118,7 +118,7 @@ export default function ThemeCMSPage() {
             className={`rounded-2xl border p-5 text-left transition ${settings.mode === "automatic" ? "border-green-400/60 bg-green-400/10" : "border-white/10 bg-black/20"}`}>
             <span className="text-2xl">🗓️</span>
             <h3 className="mt-3 font-semibold">Automatic seasons</h3>
-            <p className="mt-1 text-sm text-neutral-400">Spring, summer, autumn and winter change according to the calendar.</p>
+            <p className="mt-1 text-sm text-neutral-400">The seasons change automatically, with Halloween, Bonfire Night, Easter and Christmas taking priority on their calendar dates.</p>
           </button>
           <button type="button" onClick={() => setSettings({ ...settings, mode: "manual" })}
             className={`rounded-2xl border p-5 text-left transition ${settings.mode === "manual" ? "border-green-400/60 bg-green-400/10" : "border-white/10 bg-black/20"}`}>
