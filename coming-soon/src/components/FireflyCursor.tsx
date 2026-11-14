@@ -48,7 +48,6 @@ export default function FireflyCursor() {
     let width = window.innerWidth;
     let height = window.innerHeight;
     let animationFrame = 0;
-    let frame = 0;
     let lastX = -100;
     let lastY = -100;
     let particles: TrailParticle[] = [];
@@ -179,7 +178,6 @@ export default function FireflyCursor() {
         particle.life -= 1;
         drawShape(particle);
       });
-      frame += 1;
       animationFrame = window.requestAnimationFrame(draw);
     };
 
